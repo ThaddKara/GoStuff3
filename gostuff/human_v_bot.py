@@ -21,7 +21,7 @@ def main():
         print(chr(27) + "[2J")
         print_board(game.board)
         if game.next_player == gotypes.Player.black:
-            human_move = input('-- ')
+            human_move = input('-- ').upper()
             point = point_from_coords(human_move.strip())
             move = goboard.Move.play(point)
         else:

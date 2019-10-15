@@ -2,10 +2,7 @@ import enum
 from collections import namedtuple
 
 
-__all__ = [
-    'Player',
-    'Point'
-]
+__all__ = ['Player', 'Point']
 
 
 class Point(namedtuple('Point', 'row col')):
