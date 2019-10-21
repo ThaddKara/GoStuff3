@@ -25,7 +25,8 @@ model.add(Conv2D(48, kernel_size=(3, 3),
                  input_shape=input_shape))
 model.add(Dropout(rate=0.5))
 model.add(Conv2D(48, (3, 3),
-                 padding='same', activation='relu'))
+                 padding='same',
+                 activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(rate=0.5))
 model.add(Flatten())
@@ -49,23 +50,24 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 test_board = np.array([[
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 1, 1, 1, 1, 0, 0, 0, 0,
-    0, 1, 1, 1, 1, 0, 0, 0, 0,
-    0, 0, 1, 1, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0, -1, -1, -1, -1,  0,  0,  0,  0,
+    0, -1, -1, -1, -1,  0,  0,  0,  0,
+    0,  0, -1, -1,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,
+    0,  0,  0,  0,  0,  0,  0,  0,  0,
     ]])
 
+test_board = test_board.reshape(1, size, size, 1)
+print(test_board)
 move_probs = model.predict(test_board)[0]
-
 i = 0
 for row in range(9):
     row_formatted = []
     for col in range(9):
         row_formatted.append('{:.3f}'.format(move_probs[i]))
-    i += 1
+        i += 1
     print(' '.join(row_formatted))

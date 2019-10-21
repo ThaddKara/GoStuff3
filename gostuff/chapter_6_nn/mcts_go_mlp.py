@@ -6,8 +6,8 @@ from keras.layers import Dense
 
 
 np.random.seed(123)
-X = np.load('../generated_games/features-200.npy')
-Y = np.load('../generated_games/labels-200.npy')
+X = np.load('../generated_games/features-40k.npy')
+Y = np.load('../generated_games/labels-40k.npy')
 samples = X.shape[0]
 board_size = 9 * 9
 

@@ -31,7 +31,7 @@ class KGSIndex:
         self.data_directory = data_directory
         self.file_info = []
         self.urls = []
-        self.load_index()  # Load index on creation
+        self.load_index()
 
     def download_files(self):
         if not os.path.isdir(self.data_directory):
