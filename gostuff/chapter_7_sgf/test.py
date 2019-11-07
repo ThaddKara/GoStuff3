@@ -9,7 +9,7 @@ from keras.callbacks import ModelCheckpoint
 if __name__ == '__main__':
     go_board_rows, go_board_cols = 19, 19
     num_classes = go_board_rows * go_board_cols
-    num_games = 100
+    num_games = 10
 
     encoder = OnePlaneEncoder((go_board_rows, go_board_cols))
     processor = GoDataProcessor(encoder=encoder.name())
@@ -28,7 +28,7 @@ if __name__ == '__main__':
                   optimizer='adagrad',
                   metrics=['accuracy'])
 
-    epochs = 20
+    epochs = 2
     batch_size = 128
 
     model.fit_generator(
