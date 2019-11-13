@@ -8,9 +8,6 @@ from keras.models import load_model, save_model
 
 
 def save_model_to_hdf5_group(model, f):
-    # Use Keras save_model to save the full model (including optimizer
-    # state) to a file.
-    # Then we can embed the contents of that HDF5 file inside ours.
     tempfd, tempfname = tempfile.mkstemp(prefix='tmp-kerasmodel')
     try:
         os.close(tempfd)
@@ -24,8 +21,6 @@ def save_model_to_hdf5_group(model, f):
 
 
 def load_model_from_hdf5_group(f, custom_objects=None):
-    # Extract the model into a temporary file. Then we can use Keras
-    # load_model to read it.
     tempfd, tempfname = tempfile.mkstemp(prefix='tmp-kerasmodel')
     try:
         os.close(tempfd)
@@ -42,24 +37,8 @@ def load_model_from_hdf5_group(f, custom_objects=None):
 
 
 def set_gpu_memory_target(frac):
-    """Configure Tensorflow to use a fraction of available GPU memory.
-
-    Use this for evaluating models in parallel. By default, Tensorflow
-    will try to map all available GPU memory in advance. You can
-    configure to use just a fraction so that multiple processes can run
-    in parallel. For example, if you want to use 2 works, set the
-    memory fraction to 0.5.
-
-    If you are using Python multiprocessing, you must call this function
-    from the *worker* process (not from the parent).
-
-    This function does nothing if Keras is using a backend other than
-    Tensorflow.
-    """
     if keras.backend.backend() != 'tensorflow':
         return
-    # Do the import here, not at the top, in case Tensorflow is not
-    # installed at all.
     import tensorflow as tf
     from keras.backend.tensorflow_backend import set_session
     config = tf.ConfigProto()

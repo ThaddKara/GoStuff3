@@ -18,7 +18,6 @@ class DeepLearningAgent(Agent):
         self.model = model
         self.encoder = encoder
 
-
     def predict(self, game_state):
         encoded_state = self.encoder.encode(game_state)
         input_tensor = np.array([encoded_state])
@@ -62,4 +61,3 @@ def load_prediction_agent(h5file):
     encoder = encoders.get_encoder_by_name(
         encoder_name, (board_width, board_height))
     return DeepLearningAgent(model, encoder)
-

@@ -28,9 +28,9 @@ class GoString:
     def __init__(self, color, stones, liberties):
         self.color = color
         self.stones = frozenset(stones)
-        self.liberties = frozenset(liberties)  # <1>
+        self.liberties = frozenset(liberties)
 
-    def without_liberty(self, point):  # <2>
+    def without_liberty(self, point):
         new_liberties = self.liberties - {point}
         return GoString(self.color, self.stones, new_liberties)
 
@@ -83,25 +83,25 @@ class Board:
                 if neighbor_string not in adjacent_opposite_color:
                     adjacent_opposite_color.append(neighbor_string)
         new_string = GoString(player, [point], liberties)
-        for same_color_string in adjacent_same_color:  # <2>
+        for same_color_string in adjacent_same_color:
             new_string = new_string.merged_with(same_color_string)
         for new_string_point in new_string.stones:
             self._grid[new_string_point] = new_string
-        self._hash ^= zobrist.HASH_CODE[point, player]  # <3>
+        self._hash ^= zobrist.HASH_CODE[point, player]
         for other_color_string in adjacent_opposite_color:
-            replacement = other_color_string.without_liberty(point)  # <4>
+            replacement = other_color_string.without_liberty(point)
             if replacement.num_liberties:
                 self._replace_string(other_color_string.without_liberty(point))
             else:
-                self._remove_string(other_color_string)  # <5>
+                self._remove_string(other_color_string)
 
-    def _replace_string(self, new_string):  # <1>
+    def _replace_string(self, new_string):
         for point in new_string.stones:
             self._grid[point] = new_string
 
     def _remove_string(self, string):
         for point in string.stones:
-            for neighbor in point.neighbors():  # <2>
+            for neighbor in point.neighbors():
                 neighbor_string = self._grid.get(neighbor)
                 if neighbor_string is None:
                     continue
