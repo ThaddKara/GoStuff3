@@ -326,9 +326,13 @@ class GameState:
     def is_over(self):
         if self.last_move is None:
             return False
+        if type(self.last_move) == tuple:
+            self.last_move = Move(self.last_move)
         if self.last_move.is_resign:
             return True
-        second_last_move = self.previous_state.last_move
+        second_last_move = None
+        if self.previous_state is not None:
+            second_last_move = self.previous_state.last_move
         if second_last_move is None:
             return False
         return self.last_move.is_pass and second_last_move.is_pass

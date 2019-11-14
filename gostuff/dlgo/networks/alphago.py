@@ -12,7 +12,7 @@ def alphago_model(input_shape, is_policy_net=False,
     model.add(Conv2D(num_filters, first_kernel_size,
                      input_shape=input_shape,
                      padding='same',
-                     ata_format='channels_first',
+                     data_format='channels_first',
                      activation='relu'))
 
     for i in range(2, 12):
